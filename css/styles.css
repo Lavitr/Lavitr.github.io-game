@@ -1,0 +1,128 @@
+@font-face {
+  font-family: "Luxury";
+  src: url("../fonts/Luxury Royale JF.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Emperial";
+  src: url("../fonts/EMPERIAL.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Liberation";
+  src: url("../fonts/LiberationSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Bello";
+  src: url("../fonts/Bello Pro.otf") format("opentype");
+}
+
+body {
+  background-color: #13354a;
+  font-family: "Liberation";
+}
+
+a{
+  font-family: "Helvetica";
+}
+.main {
+  background-color: #bbe1f8;
+  margin: 20px auto;
+  width: fit-content;
+  border: 8px solid  #bbe1f8;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-radius: 20px;
+  padding-top: 20px;
+}
+
+.girl {
+  background-color:white /* #e8a947;*/
+}
+
+.gnom {
+  background-color:white /* #c2e0fd;*/
+}
+
+.header {
+  margin-top: 20px;
+  background-color: white;
+}
+
+.carousel-inner>.item>img,
+.carousel-inner>.item>a>img {
+  max-height: 500px;
+  /* Set slide height here */
+}
+
+#myCarousel.carousel.slide {
+  /* width: 100%; */
+  max-width: 900px;
+  !important
+}
+.carousel-indicators li{
+	border-color: #0b4d74;
+}
+.carousel-indicators .active{
+background-color: #0b4d74;
+}
+.slide-wrap {
+  background-color: #bbe1f8;
+}
+
+.center-horizontally {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.game-discription {
+  background-color: orange;
+  padding: 25px 50px;
+  font-family: "Bello";
+}
+p{
+	font-size: 25px;
+}
+.row-table{
+	height: 55px;
+	display: flex;
+justify-content: center; /* align horizontal */
+align-items: center;
+border-top: 2px solid black;
+}
+.key {
+	margin: 5px 0;
+    display: inline-block;
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px black;
+}
+.keylong{
+width: 170px;
+}
+.game-controls{
+	margin-top: 20px;
+	  font-family: "Liberation";
+}
+.footer{
+	border-bottom-right-radius: 16px;
+	border-bottom-left-radius: 16px;
+	font-family: "Luxury";
+}
+h6{
+	font-size: 25px;
+}
+.row-rules{
+display: flex;
+justify-content: center; /* align horizontal */
+align-items: center;
+
+}
+.game-rules{
+	background-color: orange;
+}
+.rules-border {
+	border-top: 2px solid black;
+	padding: 5px 0;
+}
