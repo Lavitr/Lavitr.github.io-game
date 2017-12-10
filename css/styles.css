@@ -16,7 +16,7 @@
 }
 
 body {
-  background-color: #13354a;
+  background-color: #161c23;
   font-family: "Liberation";
 }
 
@@ -25,12 +25,10 @@ a{
 }
 .main {
   background-color: #bbe1f8;
-  margin: 20px auto;
+  margin: 40px auto;
   width: fit-content;
   border: 8px solid  #bbe1f8;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-radius: 20px;
+  border-radius: 40px;
   padding-top: 20px;
 }
 
@@ -78,8 +76,11 @@ background-color: #0b4d74;
   padding: 25px 50px;
   font-family: "Bello";
 }
+h1{
+  font-size: 40px;
+}
 p{
-	font-size: 25px;
+	font-size: 30px;
 }
 .row-table{
 	height: 55px;
