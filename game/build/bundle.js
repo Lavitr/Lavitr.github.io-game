@@ -881,7 +881,7 @@ _assetsLoad2.default.load([
 /* -----------BackGround Sprites-----*/
 './images/edge2.png', './images/edge3.png', './images/BG.png', './images/ground1.png', './images/birdspr.png', './images/Objects/Bush1.png', './images/Objects/Bush2.png', './images/Objects/Grass1.png', './images/Objects/Grass2.png',
 // ------------everything ELSE-------------*/
-'./images/shitdown.png', './images/sprBullets.png', './images/bulletsIn.png', './images/girl.png', './images/heart.png', './images/gameover.png', './images/scorebar.png', './images/birdsShit.png',
+'./images/shitdown.png', './images/sprBullets.png', './images/bulletsIn.png', './images/girl.png', './images/heart.png', './images/gameover.png', './images/birdsShit.png',
 /* ----------------Dragon------------------*/
 './images/dragon.png']).then(function () {
   Game.initialize();
