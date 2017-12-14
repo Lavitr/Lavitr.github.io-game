@@ -877,7 +877,7 @@ _assetsLoad2.default.load([
 /* --------Gnom sprites----*/
 './images/gnom.png', './images/arrow.png', './images/gnomBlue.png', './images/spellSpr.png',
 /* -------------SOUNDS--------------*/
-'./sounds/player/die1.wav', './sounds/scream.mp3', './sounds/sword.wav', './sounds/slap.wav', './sounds/fart.wav', './sounds/shit.wav', './sounds/buratino.mp3', './sounds/flash.wav', './sounds/pain5.wav', './sounds/gun.wav', './sounds/ah.wav', './sounds/drop.wav', './sounds/so_help_me.wav', './sounds/scream2.mp3', './sounds/gunReload.wav',
+'./sounds/scream.mp3', './sounds/sword.wav', './sounds/fart.wav', './sounds/shit.wav', './sounds/buratino.mp3', './sounds/pain5.wav', './sounds/gun.wav', './sounds/drop.wav', './sounds/scream2.mp3', './sounds/gunReload.wav',
 /* -----------BackGround Sprites-----*/
 './images/edge2.png', './images/edge3.png', './images/BG.png', './images/ground1.png', './images/birdspr.png', './images/Objects/Bush1.png', './images/Objects/Bush2.png', './images/Objects/Grass1.png', './images/Objects/Grass2.png',
 // ------------everything ELSE-------------*/
