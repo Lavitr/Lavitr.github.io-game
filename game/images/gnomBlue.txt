@@ -1,3 +1,0 @@
-gnomBlue1 = 0 240 470 120
-gnomBlueAt = 0 0 1025 120
-gnomBlueDie = 0 120 695 120

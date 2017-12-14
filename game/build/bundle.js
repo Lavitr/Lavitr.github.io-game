@@ -153,10 +153,10 @@ Object.defineProperty(exports, "__esModule", {
 
 function handleKeyDown(evt) {
   Keyboard.keyDown = evt.keyCode;
-  console.log(evt.keyCode, evt.type);
+  // console.log(evt.keyCode, evt.type);
 }
 
-function handleKeyUp(evt) {
+function handleKeyUp() {
   Keyboard.keyDown = -1;
 }
 
@@ -264,18 +264,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Mouse = __webpack_require__(6);
-
-var _Mouse2 = _interopRequireDefault(_Mouse);
-
-var _Keyboard = __webpack_require__(1);
-
-var _Keyboard2 = _interopRequireDefault(_Keyboard);
-
-var _Keys = __webpack_require__(2);
-
-var _Keys2 = _interopRequireDefault(_Keys);
-
 var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
@@ -294,7 +282,6 @@ var CanvasSpr = function () {
     this.numberOfFrames = numberOfFrames;
     this.framesPerRow = framesPerRow;
     this.sx = sx;
-    // this.sy = sy;
     this.frameIndex = 0;
     this.tickCount = 0;
     this.ticksPerFrame = ticksPerFrame;
@@ -304,8 +291,6 @@ var CanvasSpr = function () {
     key: 'update',
     value: function update() {
       this.tickCount += 1;
-      var prevx = this.sx;
-      var prevy = this.sy;
       var row = Math.floor(this.frameIndex / this.framesPerRow);
       var col = Math.floor(this.frameIndex % this.framesPerRow);
 
@@ -315,11 +300,6 @@ var CanvasSpr = function () {
         this.sy = this.frameHight * row;
 
         this.frameIndex = (this.frameIndex + 1) % this.numberOfFrames;
-      }
-      //    if(this.frameIndex ===this.numberOfFrames   )
-      // { this.frameIndex = 0};
-      if (_Keyboard2.default.keyDown === _Keys2.default.L) {
-        this.sx = prevx;this.sy = prevy;
       }
     }
   }, {
@@ -396,7 +376,6 @@ var Girl = function () {
     this.shoot = false;
     this.shootTime = 0;
     this.dead = false;
-    this.stop = false;
     this.bullets = [];
     this.bulletInGun = 5;
     this.Drown = false;
@@ -408,11 +387,6 @@ var Girl = function () {
     value: function handleInput() {
       if (this.keyListen) {
         switch (_Keyboard2.default.keyDown) {
-          case _Keys2.default.right:
-            this.startNewState();
-            this.runState();
-            console.log('run');
-            break;
           case _Keys2.default.up:
             this.jump = true;
             this.startNewState();
@@ -426,7 +400,7 @@ var Girl = function () {
             this.spritePart(5, 5);
             this.sy = 450;
             break;
-          case _Keys2.default.F:
+          case _Keys2.default.right:
             this.melee = true;
             this.sound.play();
             this.startNewState();
@@ -444,17 +418,7 @@ var Girl = function () {
             this.spritePart(3, 3);
             this.sy = 600;
             break;
-          /*  case Keys.D:
-          this.dead = true;
-          this.startNewState();
-          console.log(Mouse.position);
-          break; */
-          case _Keys2.default.S:
-            this.stop = true;
-            this.startNewState();
-            break;
           default:
-            this.stop = false;
         }
       }
     }
@@ -466,13 +430,6 @@ var Girl = function () {
         this.sy = 750;
         this.nextFrame(0.1);
       }
-      /* if (this.stop) {
-         this.spritePart( 9, 9);
-         this.sy = 750;
-         this.nextFrame(0.075);
-       } */
-      // ////////////////0
-      // else
       if (this.dead) {
         this.spritePart(9, 9);
         this.sy = 150;
@@ -480,13 +437,7 @@ var Girl = function () {
           this.nextFrame(0.2);
           this.dy += 0.1;
         }
-      } else if (this.stop) {
-        this.spritePart(9, 9);
-        this.sy = 750;
-        this.nextFrame(0.075);
-        this.keyListen = true;
       } else if (this.jump && this.jumpTime < _constans.JUMP_TIME) {
-        //  console.log('girl.dy:', this.dy);
         this.jumpTime += _constans.DELTA;
         if (this.goingUp) {
           this.dy -= 2.3;
@@ -564,9 +515,10 @@ var Girl = function () {
       this.shoot = false;
       this.dead = false;
       this.jump = false;
-      this.stop = false;
-      this.keyListen = true;
-      if (!this.Drown) this.dy = 300;
+      if (!this.Drown) {
+        this.keyListen = true;
+        this.dy = 300;
+      }
       this.sy = 900;
 
       this.framesPerRow = 9;
@@ -633,7 +585,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function handleMouseMove(evt) {
   // Mouse.position = { x: evt.pageX, y: evt.pageY };
-  Mouse.position = { x: event.clientX - _Canvas2D2.default.x, y: event.clientY - _Canvas2D2.default.y };
+  Mouse.position = { x: evt.clientX - _Canvas2D2.default.x, y: evt.clientY - _Canvas2D2.default.y };
 }
 
 function handleMouseDown(evt) {
@@ -775,6 +727,7 @@ var Color = {
   mintCream: '#F5FFFA',
   mistyRose: '#FFE4E1',
   moccasin: '#FFE4B5',
+  myblue: '#33375c',
   navajoWhite: '#FFDEAD',
   navy: '#000080',
   oldLace: '#FDF5E6',
@@ -907,7 +860,6 @@ var _Score = __webpack_require__(22);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import obstacleObjects from './obstacleObjects';
 window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
   window.setTimeout(callback, 1000 / 60);
 };
@@ -927,7 +879,7 @@ _assetsLoad2.default.load([
 /* -------------SOUNDS--------------*/
 './sounds/player/die1.wav', './sounds/scream.mp3', './sounds/sword.wav', './sounds/slap.wav', './sounds/fart.wav', './sounds/shit.wav', './sounds/buratino.mp3', './sounds/flash.wav', './sounds/pain5.wav', './sounds/gun.wav', './sounds/ah.wav', './sounds/drop.wav', './sounds/so_help_me.wav', './sounds/scream2.mp3', './sounds/gunReload.wav',
 /* -----------BackGround Sprites-----*/
-'./images/edge2.png', './images/edge3.png', './images/BG.png', './images/ground1.png', './images/birdspr.png', './images/Objects/Bush1.png', './images/Objects/Bush2.png', './images/Objects/Crate.png', './images/Objects/Grass1.png', './images/Objects/Grass2.png',
+'./images/edge2.png', './images/edge3.png', './images/BG.png', './images/ground1.png', './images/birdspr.png', './images/Objects/Bush1.png', './images/Objects/Bush2.png', './images/Objects/Grass1.png', './images/Objects/Grass2.png',
 // ------------everything ELSE-------------*/
 './images/shitdown.png', './images/sprBullets.png', './images/bulletsIn.png', './images/girl.png', './images/heart.png', './images/gameover.png', './images/scorebar.png', './images/birdsShit.png',
 /* ----------------Dragon------------------*/
@@ -949,9 +901,9 @@ Game.initialize = function () {
 Game.initObjects = function () {
   Game.background = new _Background2.default(_assetsLoad2.default.BG);
   Game.ground = new _ground2.default(_assetsLoad2.default.ground1, _assetsLoad2.default.edge3, _assetsLoad2.default.edge2);
-  Game.backObjects = new _backobjects2.default(_assetsLoad2.default.Bush1, _assetsLoad2.default.Bush2, _assetsLoad2.default.Crate, _assetsLoad2.default.Grass1, _assetsLoad2.default.Grass2);
+  Game.backObjects = new _backobjects2.default(_assetsLoad2.default.Bush1, _assetsLoad2.default.Bush2, _assetsLoad2.default.Grass1, _assetsLoad2.default.Grass2);
   Game.girl = new _girl2.default(_assetsLoad2.default.girl, _assetsLoad2.default.bulletsIn, _assetsLoad2.default.sword, _assetsLoad2.default.gun);
-  Game.bird = new _bird2.default(_assetsLoad2.default.birdspr, _assetsLoad2.default.birdsShit, _assetsLoad2.default.shitdown, _assetsLoad2.default.drop);
+  Game.bird = new _bird2.default(_assetsLoad2.default.birdspr, _assetsLoad2.default.birdsShit, _assetsLoad2.default.shitdown, _assetsLoad2.default.fart, _assetsLoad2.default.drop);
   Game.gnom = new _GnomGreen2.default(_assetsLoad2.default.gnom, _assetsLoad2.default.arrow, _assetsLoad2.default.sword);
 };
 
@@ -978,6 +930,7 @@ Game.handleInput = function () {
     Game.girl.handleInput();
   } else if (_Mouse2.default.leftPressed && _Mouse2.default.position.x >= 325 && _Mouse2.default.position.x <= 575 && _Mouse2.default.position.y >= 280 && _Mouse2.default.position.y <= 330) {
     Game.reset();
+    _assetsLoad2.default.buratino.restart();
   }
 };
 // -----------------------------COLLISIONS-------------------------//
@@ -1012,17 +965,17 @@ Game.update = function () {
     Game.backObjects.update();
     Game.background.update();
     Game.ground.update();
-    Game.bird.update(_assetsLoad2.default.fart, _assetsLoad2.default.slap);
+    Game.bird.update();
     if (Game.spareBullets) Game.spareBullets.update();
   }
   if (Game.girl.dead) Game.girl.update();
 
   // -------------------------Spare Bullets--------//
-  if (Game.score % 10 === 0 && Game.score > 0 && !Game.spareBullets) {
+  if (Game.score % 70 === 0 && Game.score > 0 && !Game.spareBullets && Game.girl.bulletInGun < 15) {
     Game.spareBullets = new _SpareBullets2.default(_assetsLoad2.default.sprBullets);
   }
-  if (Game.score % 20 === 0 && Game.score > 0 && !Game.dragon) {
-    // Game.dragon = new Dragon(assets.dragon);
+  if (Game.score % 30 === 0 && Game.score > 0 && !Game.dragon) {
+    Game.dragon = new _Dragon2.default(_assetsLoad2.default.dragon);
   }
   if (Game.spareBullets) {
     if (Game.spareBullets.x < -30) Game.spareBullets = null;
@@ -1044,6 +997,7 @@ Game.draw = function () {
   }
   if (!Game.live) {
     (0, _informGame.diplayGameOver)(_assetsLoad2.default.gameover);
+    _assetsLoad2.default.buratino.pause();
     var highScore = (0, _Score.setScore)(Game.score) || Game.score;
     (0, _informGame.displayScore)(highScore);
   }
@@ -1076,14 +1030,6 @@ var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
 
-var _Keyboard = __webpack_require__(1);
-
-var _Keyboard2 = _interopRequireDefault(_Keyboard);
-
-var _Keys = __webpack_require__(2);
-
-var _Keys2 = _interopRequireDefault(_Keys);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1099,11 +1045,9 @@ var Background = function () {
   _createClass(Background, [{
     key: 'update',
     value: function update() {
-      if (_Keyboard2.default.keyDown !== _Keys2.default.S) {
-        this.position.x -= 0.5;
-        if (this.position.x <= -900) {
-          this.position.x = 0;
-        }
+      this.position.x -= 0.5;
+      if (this.position.x <= -900) {
+        this.position.x = 0;
       }
     }
   }, {
@@ -1136,14 +1080,6 @@ var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
 
-var _Keyboard = __webpack_require__(1);
-
-var _Keyboard2 = _interopRequireDefault(_Keyboard);
-
-var _Keys = __webpack_require__(2);
-
-var _Keys2 = _interopRequireDefault(_Keys);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1161,21 +1097,18 @@ var Ground = function () {
   _createClass(Ground, [{
     key: 'update',
     value: function update() {
-      if (_Keyboard2.default.keyDown !== _Keys2.default.S) {
-        this.position.x -= 1;
-        if (this.position.x <= -1300) {
-          this.position.x = 0;
-        }
+      this.position.x -= 1;
+      if (this.position.x <= -1300) {
+        this.position.x = 0;
       }
     }
   }, {
     key: 'draw',
     value: function draw() {
       _Canvas2D2.default.drawImage(this.spr, this.position);
-      //  Canvas2D.drawImage(this.spr, { x: this.position.x + 384, y: 440 });
+
       _Canvas2D2.default.drawImage(this.spr1, { x: this.position.x + 900, y: 440 });
       _Canvas2D2.default.drawImage(this.spr, { x: this.position.x + 1300, y: 440 });
-      // Canvas2D.drawImage(this.spr, { x: this.position.x + 1128, y: 440 });
     }
   }]);
 
@@ -1226,13 +1159,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Bird = function (_CanvasSpr) {
   _inherits(Bird, _CanvasSpr);
 
-  function Bird(spr, spr2, spr3, sound) {
+  function Bird(spr, spr2, spr3, soundFart, soundDrop) {
     _classCallCheck(this, Bird);
 
     var _this = _possibleConstructorReturn(this, (Bird.__proto__ || Object.getPrototypeOf(Bird)).call(this, spr, 0, 90, 58, 4, 10, 4));
 
     _this.spr3 = spr3;
-    _this.sound = sound;
+    _this.soundFart = soundFart;
+    _this.soundDrop = soundDrop;
     _this.shitSpr = spr2;
     _this.positionX = 900;
     _this.positionY = 25;
@@ -1249,7 +1183,7 @@ var Bird = function (_CanvasSpr) {
 
   _createClass(Bird, [{
     key: 'update',
-    value: function update(soundFart, slap) {
+    value: function update() {
       _get(Bird.prototype.__proto__ || Object.getPrototypeOf(Bird.prototype), 'update', this).call(this);
       this.ticCount += 1;
       if (this.ticCount >= 3) {
@@ -1262,8 +1196,8 @@ var Bird = function (_CanvasSpr) {
         this.shit = true;
         this.played = false;
         this.shitX = this.startShit + 50;
-        soundFart.volume = 0.05;
-        soundFart.play();
+        this.soundFart.volume = 0.05;
+        this.soundFart.play();
       }
       if (this.shit) {
         this.shitY += 3;
@@ -1276,10 +1210,11 @@ var Bird = function (_CanvasSpr) {
       }
       if (this.shitdown) {
         if (!this.played) {
-          this.sound.play();
+          this.soundDrop.play();
           this.played = true;
         }
-        if (_Keyboard2.default.keyDown !== _Keys2.default.S) this.shitX -= 1;
+        //   if (Keyboard.keyDown !== Keys.S)
+        this.shitX -= 1;
         this.shitY = 425;
       }
       if (this.shitX <= -30) {
@@ -1331,27 +1266,18 @@ var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
 
-var _Keyboard = __webpack_require__(1);
-
-var _Keyboard2 = _interopRequireDefault(_Keyboard);
-
-var _Keys = __webpack_require__(2);
-
-var _Keys2 = _interopRequireDefault(_Keys);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var BackObjects = function () {
-  function BackObjects(spr1, spr2, spr3, spr4, spr5) {
+  function BackObjects(spr1, spr2, spr3, spr4) {
     _classCallCheck(this, BackObjects);
 
     this.spr1 = spr1;
     this.spr2 = spr2;
     this.spr3 = spr3;
     this.spr4 = spr4;
-    this.spr5 = spr5;
     this.position = { x: 150, y: 330 };
     this.delta1 = 0;
     this.delta2 = 0;
@@ -1360,13 +1286,11 @@ var BackObjects = function () {
   _createClass(BackObjects, [{
     key: 'update',
     value: function update() {
-      if (_Keyboard2.default.keyDown !== _Keys2.default.S) {
-        this.position.x -= 1;
-        if (this.position.x <= -500) {
-          this.position.x = 700 + Math.random() * 100;
-          this.delta1 = Math.random() * 100;
-          this.delta2 = Math.random() * 300;
-        }
+      this.position.x -= 1;
+      if (this.position.x <= -500) {
+        this.position.x = 900 + Math.random() * 100;
+        this.delta1 = Math.random() * 100;
+        this.delta2 = Math.random() * 300;
       }
     }
   }, {
@@ -1374,11 +1298,8 @@ var BackObjects = function () {
     value: function draw() {
       _Canvas2D2.default.drawImage(this.spr1, this.position); // bush1
       _Canvas2D2.default.drawImage(this.spr2, { x: this.position.x + 400, y: 360 }); // bush2
-      // Canvas2D.drawImage(this.spr3, { x: 550, y: 150 }); // crate
-
-      _Canvas2D2.default.drawImage(this.spr4, { x: this.position.x + 100 + this.delta1, y: 360 }); // gras1
-      _Canvas2D2.default.drawImage(this.spr5, { x: this.position.x + 150 + this.delta2, y: 380 }); // gras2
-      // Canvas2D.drawImage(spr3, { x: this.position.x + 200 + this.delta1, y: 350 }); // crate2
+      _Canvas2D2.default.drawImage(this.spr3, { x: this.position.x + 100 + this.delta1, y: 360 }); // gras1
+      _Canvas2D2.default.drawImage(this.spr4, { x: this.position.x + 150 + this.delta2, y: 380 }); // gras2
     }
   }]);
 
@@ -1414,10 +1335,9 @@ var assets = {
     return new Promise(function (resolve) {
       var loadHandler = function loadHandler() {
         _this.loaded += 1;
-        //   console.log('loade:', this.loaded, 'to load:', this.toLoad);
         if (_this.toLoad === _this.loaded) {
-          // this.toLoad = 0;
-          //  this.loaded = 0;
+          _this.toLoad = 0;
+          _this.loaded = 0;
           resolve();
         }
       };
@@ -1476,51 +1396,40 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var actx = new AudioContext();
 
-// The sound object
-
 var Sound = function () {
   function Sound(source, loadHandler) {
     _classCallCheck(this, Sound);
 
-    // Assign the `source` and `loadHandler` values to this object 
     this.source = source;
     this.loadHandler = loadHandler;
 
-    // Set the default properties
     this.actx = actx;
     this.volumeNode = this.actx.createGain();
     this.panNode = this.actx.createStereoPanner();
-    // this.panNode.panningModel = "equalpower";
+
     this.soundNode = null;
     this.buffer = null;
     this.loop = false;
     this.playing = false;
 
-    // Values for the pan and volume getters/setters
     this.panValue = 0;
     this.volumeValue = 1;
 
-    // Values to help track and set the start and pause times
     this.startTime = 0;
     this.startOffset = 0;
 
-    // Load the sound
     this.load();
   }
-
-  // The sound object's methods
 
   _createClass(Sound, [{
     key: 'load',
     value: function load() {
       var _this = this;
 
-      // Use xhr to load the sound file
       var xhr = new XMLHttpRequest();
       xhr.open('GET', this.source, true);
       xhr.responseType = 'arraybuffer';
       xhr.addEventListener('load', function () {
-        // Decode the sound and store a reference to the buffer 
         _this.actx.decodeAudioData(xhr.response, function (buffer) {
           _this.buffer = buffer;
           _this.hasLoaded = true;
@@ -1528,52 +1437,31 @@ var Sound = function () {
           if (_this.loadHandler) {
             _this.loadHandler();
           }
-        },
-
-        // Throw an error if the sound can't be decoded
-        function (error) {
+        }, function (error) {
           throw new Error('Audio could not be decoded: ' + error);
         });
       });
 
-      // Send the request to load the file
       xhr.send();
     }
   }, {
     key: 'play',
     value: function play() {
-      // Set the start time (it will be `0` when the first sound starts)
       this.startTime = this.actx.currentTime;
-
-      // Create a sound node 
       this.soundNode = this.actx.createBufferSource();
-
-      // Set the sound node's buffer property to the loaded sound
       this.soundNode.buffer = this.buffer;
-
-      // Connect the sound to the volume, connect the volume to the
-      // pan, and connect the pan to the destination
       this.soundNode.connect(this.volumeNode);
       this.volumeNode.connect(this.panNode);
       this.panNode.connect(this.actx.destination);
 
-      // Will the sound loop? This can be `true` or `false`
       this.soundNode.loop = this.loop;
-
-      // Finally, use the `start` method to play the sound.
-      // The start time will either be `0`,
-      // or a later time if the sound was paused
       this.soundNode.start(this.startTime, this.startOffset % this.buffer.duration);
 
-      // Set `playing` to `true` to help control the 
-      // `pause` and `restart` methods
       this.playing = true;
     }
   }, {
     key: 'pause',
     value: function pause() {
-      // Pause the sound if it's playing, and calculate the
-      // `startOffset` to save the current position 
       if (this.playing) {
         this.soundNode.stop(this.actx.currentTime);
         this.startOffset += this.actx.currentTime - this.startTime;
@@ -1583,8 +1471,6 @@ var Sound = function () {
   }, {
     key: 'restart',
     value: function restart() {
-      // Stop the sound if it's playing, reset the start and offset times,
-      // then call the `play` method again
       if (this.playing) {
         this.soundNode.stop(this.actx.currentTime);
       }
@@ -1599,9 +1485,6 @@ var Sound = function () {
       this.startOffset = value;
       this.play();
     }
-
-    // Volume and pan getters/setters
-
   }, {
     key: 'volume',
     get: function get() {
@@ -1624,9 +1507,6 @@ var Sound = function () {
   return Sound;
 }();
 
-// Create a high-level wrapper to keep our API consistent and flexible
-
-
 function makeSound(source, loadHandler) {
   return new Sound(source, loadHandler);
 }
@@ -1644,19 +1524,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Keyboard = __webpack_require__(1);
-
-var _Keyboard2 = _interopRequireDefault(_Keyboard);
-
-var _Keys = __webpack_require__(2);
-
-var _Keys2 = _interopRequireDefault(_Keys);
-
 var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
-
-var _constans = __webpack_require__(5);
 
 var _girl = __webpack_require__(4);
 
@@ -1762,28 +1632,8 @@ var GnomGreen = function () {
         this.dy = 350;this.dx -= 1;
       }
       if (this.madeShoot) this.positionArrow.x -= 2.5;
-      //  this.positionArrow.y -= 0.15;
       if (!this.dead) this.dx -= 1.5;
     }
-    /* reset() {
-      this.sprite = null;
-      this.positionArrow = { x: 880, y: 380 };
-      this.frameWidth = 105;
-      this.frameHight = 120;
-      this.numberOfFrames = 0;
-      this.framesPerRow = 0;
-      this.sx = 0;
-      this.sy = 0;
-      this.dx = 900;
-      this.dy = 330;
-      this.frameIndex = 0;
-      this.time = 0;
-      this.genTime = 0;
-      this.shoot = false;
-      this.goAgain = false;
-    }
-    */
-
   }, {
     key: 'draw',
     value: function draw() {
@@ -1812,19 +1662,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Keyboard = __webpack_require__(1);
-
-var _Keyboard2 = _interopRequireDefault(_Keyboard);
-
-var _Keys = __webpack_require__(2);
-
-var _Keys2 = _interopRequireDefault(_Keys);
-
 var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
-
-var _constans = __webpack_require__(5);
 
 var _girl = __webpack_require__(4);
 
@@ -1939,7 +1779,6 @@ var GnomBlue = function () {
         this.positionArrow.x > 550 ? this.positionArrow.y -= 3.5 : this.positionArrow.y += 1;
         this.spell.update();
       }
-      //  this.positionArrow.y -= 0.15;
       if (!this.dead) this.dx -= 1.5;
     }
   }, {
@@ -2101,21 +1940,21 @@ var _Color2 = _interopRequireDefault(_Color);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var aboutGame = function aboutGame(bulletInGun, bulletsIn, live, heart, shitHappens, shitdown, score) {
-  _Canvas2D2.default.drawText('LIVES:', { x: 5, y: 140 }, _Color2.default.olive);
-  _Canvas2D2.default.drawText('Bullets:', { x: 5, y: 200 }, _Color2.default.olive);
+  // Canvas2D.drawText('LIVES:', { x: 5, y: 140 }, Color.olive);
+  // /Canvas2D.drawText('Bullets:', { x: 5, y: 200 }, Color.olive);
   for (var i = 0; i < bulletInGun; i++) {
-    _Canvas2D2.default.drawImage(bulletsIn, { x: 10 + 15 * i, y: 240 }, 80);
+    _Canvas2D2.default.drawImage(bulletsIn, { x: 10 + 15 * i, y: 190 }, 80);
   }
   for (var _i = 0; _i < live; _i++) {
-    _Canvas2D2.default.drawImage(heart, { x: 10 + 22 * _i, y: 170 });
+    _Canvas2D2.default.drawImage(heart, { x: 10 + 22 * _i, y: 140 });
   }
   if (shitHappens) {
-    _Canvas2D2.default.drawText('Shit happens:', { x: 5, y: 250 }, _Color2.default.olive);
+    _Canvas2D2.default.drawText('shit happens', { x: 5, y: 220 }, _Color2.default.myblue);
     for (var _i2 = 0; _i2 < shitHappens; _i2++) {
-      _Canvas2D2.default.drawImage(shitdown, { x: 10 + 22 * _i2, y: 270 });
+      _Canvas2D2.default.drawImage(shitdown, { x: 10 + 22 * _i2, y: 240 });
     }
   }
-  _Canvas2D2.default.drawText('SCORE:' + score, { x: 5, y: 110 }, _Color2.default.olive);
+  _Canvas2D2.default.drawText('SCORE:' + score, { x: 5, y: 110 }, _Color2.default.myblue, '25px');
 };
 
 var diplayGameOver = function diplayGameOver(gameover) {
@@ -2125,8 +1964,8 @@ var diplayGameOver = function diplayGameOver(gameover) {
   _Canvas2D2.default.fillRect(330, 285, 245, 45, 'rgba(76, 63, 191, 0.3)');
 };
 var displayScore = function displayScore(score) {
-  _Canvas2D2.default.fillRect(300, 50, 300, 60, _Color2.default.orange);
-  _Canvas2D2.default.drawText('BEST SCORE:' + score, { x: 320, y: 60 }, _Color2.default.gray, '35px');
+  _Canvas2D2.default.fillRect(300, 50, 300, 60, '#dc9e44');
+  _Canvas2D2.default.drawText('BEST SCORE:' + score, { x: 320, y: 60 }, '#3a270c', '35px');
 };
 
 exports.aboutGame = aboutGame;

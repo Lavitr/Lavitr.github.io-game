@@ -1,0 +1,12 @@
+body {
+    background-color: #4cc;
+}
+html,
+body {
+    margin: 0;
+}
+#myCanvas {
+    display: block;
+    margin: 20px auto 0;
+    border: 4px solid #000;
+}
