@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -151,6 +151,69 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Canvas2D = __webpack_require__(0);
+
+var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var CanvasSpr = function () {
+  function CanvasSpr(sprite, sx, frameWidth, frameHight, numberOfFrames, ticksPerFrame, framesPerRow) {
+    _classCallCheck(this, CanvasSpr);
+
+    this.sprite = sprite;
+    this.frameWidth = frameWidth;
+    this.frameHight = frameHight;
+    this.numberOfFrames = numberOfFrames;
+    this.framesPerRow = framesPerRow;
+    this.sx = sx;
+    this.frameIndex = 0;
+    this.tickCount = 0;
+    this.ticksPerFrame = ticksPerFrame;
+  }
+
+  _createClass(CanvasSpr, [{
+    key: 'update',
+    value: function update() {
+      this.tickCount += 1;
+      var row = Math.floor(this.frameIndex / this.framesPerRow);
+      var col = Math.floor(this.frameIndex % this.framesPerRow);
+
+      if (this.tickCount === this.ticksPerFrame) {
+        this.tickCount = 0;
+        this.sx = this.frameWidth * col;
+        this.sy = this.frameHight * row;
+
+        this.frameIndex = (this.frameIndex + 1) % this.numberOfFrames;
+      }
+    }
+  }, {
+    key: 'draw',
+    value: function draw(sy, dx, dy) {
+      _Canvas2D2.default.drawSpr(this.sprite, this.sx, sy, this.frameWidth, this.frameHight, dx, dy, this.frameWidth, this.frameHight);
+    }
+  }]);
+
+  return CanvasSpr;
+}();
+
+exports.default = CanvasSpr;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 function handleKeyDown(evt) {
   Keyboard.keyDown = evt.keyCode;
   // console.log(evt.keyCode, evt.type);
@@ -172,7 +235,7 @@ var Keyboard = {
 exports.default = Keyboard;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -252,69 +315,6 @@ var Keys = {
 exports.default = Keys;
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _Canvas2D = __webpack_require__(0);
-
-var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var CanvasSpr = function () {
-  function CanvasSpr(sprite, sx, frameWidth, frameHight, numberOfFrames, ticksPerFrame, framesPerRow) {
-    _classCallCheck(this, CanvasSpr);
-
-    this.sprite = sprite;
-    this.frameWidth = frameWidth;
-    this.frameHight = frameHight;
-    this.numberOfFrames = numberOfFrames;
-    this.framesPerRow = framesPerRow;
-    this.sx = sx;
-    this.frameIndex = 0;
-    this.tickCount = 0;
-    this.ticksPerFrame = ticksPerFrame;
-  }
-
-  _createClass(CanvasSpr, [{
-    key: 'update',
-    value: function update() {
-      this.tickCount += 1;
-      var row = Math.floor(this.frameIndex / this.framesPerRow);
-      var col = Math.floor(this.frameIndex % this.framesPerRow);
-
-      if (this.tickCount === this.ticksPerFrame) {
-        this.tickCount = 0;
-        this.sx = this.frameWidth * col;
-        this.sy = this.frameHight * row;
-
-        this.frameIndex = (this.frameIndex + 1) % this.numberOfFrames;
-      }
-    }
-  }, {
-    key: 'draw',
-    value: function draw(sy, dx, dy) {
-      _Canvas2D2.default.drawSpr(this.sprite, this.sx, sy, this.frameWidth, this.frameHight, dx, dy, this.frameWidth, this.frameHight);
-    }
-  }]);
-
-  return CanvasSpr;
-}();
-
-exports.default = CanvasSpr;
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -328,11 +328,11 @@ exports.spritePart = exports.nextFrame = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Keyboard = __webpack_require__(1);
+var _Keyboard = __webpack_require__(2);
 
 var _Keyboard2 = _interopRequireDefault(_Keyboard);
 
-var _Keys = __webpack_require__(2);
+var _Keys = __webpack_require__(3);
 
 var _Keys2 = _interopRequireDefault(_Keys);
 
@@ -340,7 +340,7 @@ var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
 
-var _constans = __webpack_require__(5);
+var _constans = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -559,78 +559,6 @@ exports.default = Girl;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var DELTA = exports.DELTA = 1 / 60;
-var JUMP_TIME = exports.JUMP_TIME = 2.9;
-var SLIDE_TIME = exports.SLIDE_TIME = 2;
-var MELEE_TIME = exports.MELEE_TIME = 0.35;
-var SHOOT_TIME = exports.SHOOT_TIME = 0.2;
-var DEAD_TIME = exports.DEAD_TIME = 1.5;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Canvas2D = __webpack_require__(0);
-
-var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function handleMouseMove(evt) {
-  // Mouse.position = { x: evt.pageX, y: evt.pageY };
-  Mouse.position = { x: evt.clientX - _Canvas2D2.default.x, y: evt.clientY - _Canvas2D2.default.y };
-}
-
-function handleMouseDown(evt) {
-  if (evt.which === 1) {
-    if (!Mouse.leftDown) {
-      Mouse.leftPressed = true;
-    }
-    Mouse.leftDown = true;
-  }
-}
-
-function handleMouseUp(evt) {
-  if (evt.which === 1) {
-    Mouse.leftDown = false;
-  }
-}
-
-var Mouse = {
-  position: { x: 0, y: 0 },
-  leftDown: false,
-  leftPressed: false
-};
-
-Mouse.initialize = function () {
-  document.onmousemove = handleMouseMove;
-  document.onmousedown = handleMouseDown;
-  document.onmouseup = handleMouseUp;
-};
-
-Mouse.reset = function () {
-  Mouse.leftPressed = false;
-};
-
-exports.default = Mouse;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var Color = {
   aliceBlue: '#F0F8FF',
@@ -779,32 +707,32 @@ var Color = {
 exports.default = Color;
 
 /***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _Mouse = __webpack_require__(6);
+var _Mouse = __webpack_require__(8);
 
 var _Mouse2 = _interopRequireDefault(_Mouse);
 
-var _Keyboard = __webpack_require__(1);
+var _Keyboard = __webpack_require__(2);
 
 var _Keyboard2 = _interopRequireDefault(_Keyboard);
 
-var _Keys = __webpack_require__(2);
+var _Keys = __webpack_require__(3);
 
 var _Keys2 = _interopRequireDefault(_Keys);
 
-var _Color = __webpack_require__(7);
+var _Color = __webpack_require__(5);
 
 var _Color2 = _interopRequireDefault(_Color);
 
@@ -812,11 +740,11 @@ var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
 
-var _Background = __webpack_require__(10);
+var _Background = __webpack_require__(9);
 
 var _Background2 = _interopRequireDefault(_Background);
 
-var _ground = __webpack_require__(11);
+var _ground = __webpack_require__(10);
 
 var _ground2 = _interopRequireDefault(_ground);
 
@@ -956,7 +884,6 @@ Game.update = function () {
   if (Game.dragon) Game.dragon.update();
   if (Game.dragon && Game.dragon.y < -220) Game.dragon = null;
   if (Game.gnom.dx < -170 - Game.gnom.finish) {
-    console.log('finish', -170 - Game.gnom.finish);
     Math.random() > 0.3 ? Game.gnom = new _GnomGreen2.default(_assetsLoad2.default.gnom, _assetsLoad2.default.arrow, _assetsLoad2.default.sword) : Game.gnom = new _GnomBlue2.default(_assetsLoad2.default.gnomBlue, _assetsLoad2.default.spellSpr, _assetsLoad2.default.sword);
   }
   if (Game.live > 0) {
@@ -971,10 +898,11 @@ Game.update = function () {
   if (Game.girl.dead) Game.girl.update();
 
   // -------------------------Spare Bullets--------//
-  if (Game.score % 70 === 0 && Game.score > 0 && !Game.spareBullets && Game.girl.bulletInGun < 15) {
+  if (Game.score % 60 === 0 && Game.score > 0 && !Game.spareBullets && Game.girl.bulletInGun < 15) {
     Game.spareBullets = new _SpareBullets2.default(_assetsLoad2.default.sprBullets);
   }
-  if (Game.score % 30 === 0 && Game.score > 0 && !Game.dragon) {
+
+  if (Game.score % 40 === 0 && Game.score > 0 && !Game.dragon) {
     Game.dragon = new _Dragon2.default(_assetsLoad2.default.dragon);
   }
   if (Game.spareBullets) {
@@ -1014,7 +942,62 @@ Game.mainLoop = function () {
 };
 
 /***/ }),
-/* 10 */
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Canvas2D = __webpack_require__(0);
+
+var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function handleMouseMove(evt) {
+  // Mouse.position = { x: evt.pageX, y: evt.pageY };
+  Mouse.position = { x: evt.clientX - _Canvas2D2.default.x, y: evt.clientY - _Canvas2D2.default.y };
+}
+
+function handleMouseDown(evt) {
+  if (evt.which === 1) {
+    if (!Mouse.leftDown) {
+      Mouse.leftPressed = true;
+    }
+    Mouse.leftDown = true;
+  }
+}
+
+function handleMouseUp(evt) {
+  if (evt.which === 1) {
+    Mouse.leftDown = false;
+  }
+}
+
+var Mouse = {
+  position: { x: 0, y: 0 },
+  leftDown: false,
+  leftPressed: false
+};
+
+Mouse.initialize = function () {
+  document.onmousemove = handleMouseMove;
+  document.onmousedown = handleMouseDown;
+  document.onmouseup = handleMouseUp;
+};
+
+Mouse.reset = function () {
+  Mouse.leftPressed = false;
+};
+
+exports.default = Mouse;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1064,7 +1047,7 @@ var Background = function () {
 exports.default = Background;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1118,6 +1101,23 @@ var Ground = function () {
 exports.default = Ground;
 
 /***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var DELTA = exports.DELTA = 1 / 60;
+var JUMP_TIME = exports.JUMP_TIME = 2.9;
+var SLIDE_TIME = exports.SLIDE_TIME = 2;
+var MELEE_TIME = exports.MELEE_TIME = 0.35;
+var SHOOT_TIME = exports.SHOOT_TIME = 0.2;
+var DEAD_TIME = exports.DEAD_TIME = 1.5;
+
+/***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1132,15 +1132,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _CanvasSpr2 = __webpack_require__(3);
+var _CanvasSpr2 = __webpack_require__(1);
 
 var _CanvasSpr3 = _interopRequireDefault(_CanvasSpr2);
 
-var _Keyboard = __webpack_require__(1);
+var _Keyboard = __webpack_require__(2);
 
 var _Keyboard2 = _interopRequireDefault(_Keyboard);
 
-var _Keys = __webpack_require__(2);
+var _Keys = __webpack_require__(3);
 
 var _Keys2 = _interopRequireDefault(_Keys);
 
@@ -1192,7 +1192,7 @@ var Bird = function (_CanvasSpr) {
       }
       this.positionX -= 2;
 
-      if (this.positionX === this.startShit) {
+      if (this.positionX === this.startShit && !this.shit) {
         this.shit = true;
         this.played = false;
         this.shitX = this.startShit + 50;
@@ -1213,7 +1213,7 @@ var Bird = function (_CanvasSpr) {
           this.soundDrop.play();
           this.played = true;
         }
-        //   if (Keyboard.keyDown !== Keys.S)
+
         this.shitX -= 1;
         this.shitY = 425;
       }
@@ -1228,7 +1228,6 @@ var Bird = function (_CanvasSpr) {
         this.positionY = 25;
         this.positionX = 900;
         this.startShit = 200 + 2 * Math.floor(Math.random() * 350);
-        //   console.log('startShit', this.startShit);
       }
     }
   }, {
@@ -1321,11 +1320,20 @@ Object.defineProperty(exports, "__esModule", {
 
 var _sound = __webpack_require__(15);
 
+var _Canvas2D = __webpack_require__(0);
+
+var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
+
+var _Color = __webpack_require__(5);
+
+var _Color2 = _interopRequireDefault(_Color);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var assets = {
 
   toLoad: 0,
   loaded: 0,
-
   imageExtensions: ['png', 'jpg', 'gif'],
   audioExtensions: ['mp3', 'ogg', 'wav', 'webm'],
 
@@ -1474,15 +1482,9 @@ var Sound = function () {
       if (this.playing) {
         this.soundNode.stop(this.actx.currentTime);
       }
-      this.startOffset = 0, this.play();
-    }
-  }, {
-    key: 'playFrom',
-    value: function playFrom(value) {
-      if (this.playing) {
-        this.soundNode.stop(this.actx.currentTime);
-      }
-      this.startOffset = value;
+      this.startOffset = 0;
+      this.startPoint = 0;
+      this.endPoint = this.buffer.duration;
       this.play();
     }
   }, {
@@ -1668,7 +1670,7 @@ var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
 
 var _girl = __webpack_require__(4);
 
-var _CanvasSpr = __webpack_require__(3);
+var _CanvasSpr = __webpack_require__(1);
 
 var _CanvasSpr2 = _interopRequireDefault(_CanvasSpr);
 
@@ -1811,7 +1813,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _CanvasSpr2 = __webpack_require__(3);
+var _CanvasSpr2 = __webpack_require__(1);
 
 var _CanvasSpr3 = _interopRequireDefault(_CanvasSpr2);
 
@@ -1874,7 +1876,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _CanvasSpr2 = __webpack_require__(3);
+var _CanvasSpr2 = __webpack_require__(1);
 
 var _CanvasSpr3 = _interopRequireDefault(_CanvasSpr2);
 
@@ -1933,7 +1935,7 @@ var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
 
-var _Color = __webpack_require__(7);
+var _Color = __webpack_require__(5);
 
 var _Color2 = _interopRequireDefault(_Color);
 
@@ -2006,7 +2008,7 @@ var girlDrowning = function girlDrowning(Game, assets) {
 };
 
 var girlStepsOnShit = function girlStepsOnShit(Game, assets) {
-  if (Game.girl.dx + 90 > Game.bird.shitX && Game.girl.dx < Game.bird.shitX && Game.girl.dy > 280 && Game.bird.shitY > 275) Game.girl.SayShit += 1;
+  if (Game.girl.dx + 90 > Game.bird.shitX && Game.girl.dx + 30 < Game.bird.shitX && Game.girl.dy > 295 && Game.bird.shitY > 280) Game.girl.SayShit += 1;
   if (Game.girl.SayShit === 1) {
     Game.shitHappens += 1;
     assets.shit.play();
