@@ -1,0 +1,106 @@
+const actx = new AudioContext();
+
+class Sound {
+  constructor(source, loadHandler) {
+    this.source = source;
+    this.loadHandler = loadHandler;
+
+    this.actx = actx;
+    this.volumeNode = this.actx.createGain();
+    this.panNode = this.actx.createStereoPanner();
+
+    this.soundNode = null;
+    this.buffer = null;
+    this.loop = false;
+    this.playing = false;
+
+    this.panValue = 0;
+    this.volumeValue = 1;
+
+    this.startTime = 0;
+    this.startOffset = 0;
+
+    this.load();
+  }
+
+  load() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', this.source, true);
+    xhr.responseType = 'arraybuffer';
+    xhr.addEventListener('load', () => {
+      this.actx.decodeAudioData(
+        xhr.response,
+        (buffer) => {
+          this.buffer = buffer;
+          this.hasLoaded = true;
+
+          if (this.loadHandler) {
+            this.loadHandler();
+          }
+        },
+
+        (error) => {
+          throw new Error(`Audio could not be decoded: ${error}`);
+        },
+      );
+    });
+
+    xhr.send();
+  }
+
+  play() {
+    this.startTime = this.actx.currentTime;
+    this.soundNode = this.actx.createBufferSource();
+    this.soundNode.buffer = this.buffer;
+    this.soundNode.connect(this.volumeNode);
+    this.volumeNode.connect(this.panNode);
+    this.panNode.connect(this.actx.destination);
+
+    this.soundNode.loop = this.loop;
+    this.soundNode.start(
+      this.startTime,
+      this.startOffset % this.buffer.duration,
+    );
+
+    this.playing = true;
+  }
+
+  pause() {
+    if (this.playing) {
+      this.soundNode.stop(this.actx.currentTime);
+      this.startOffset += this.actx.currentTime - this.startTime;
+      this.playing = false;
+    }
+  }
+
+  restart() {
+    if (this.playing) {
+      this.soundNode.stop(this.actx.currentTime);
+    }
+    this.startOffset = 0;
+    this.startPoint = 0;
+    this.endPoint = this.buffer.duration;
+    this.play();
+  }
+
+  get volume() {
+    return this.volumeValue;
+  }
+
+  set volume(value) {
+    this.volumeNode.gain.value = value;
+    this.volumeValue = value;
+  }
+
+  get pan() {
+    return this.panNode.pan.value;
+  }
+  set pan(value) {
+    this.panNode.pan.value = value;
+  }
+}
+
+export function makeSound(source, loadHandler) {
+  return new Sound(source, loadHandler);
+}
+

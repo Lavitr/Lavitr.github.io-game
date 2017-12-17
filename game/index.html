@@ -10,11 +10,19 @@
     <link rel="stylesheet" type="text/css" href="layout.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <script src="build/bundle.js"></script>
+
 </head>
+
 <body>
-    <div id="gameArea">
+    <div class="load-area centered" id="loading">
+        <h1>Relax!!! Game will start soon...</h1>
+        <p id="percentage"></p>
+    </div>
+
+    <div id="gameArea" class="centered">
         <canvas id="myCanvas" height="500" width="900"></canvas>
     </div>
+
 </body>
 
 </html>

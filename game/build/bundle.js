@@ -728,14 +728,6 @@ var _Keyboard = __webpack_require__(2);
 
 var _Keyboard2 = _interopRequireDefault(_Keyboard);
 
-var _Keys = __webpack_require__(3);
-
-var _Keys2 = _interopRequireDefault(_Keys);
-
-var _Color = __webpack_require__(4);
-
-var _Color2 = _interopRequireDefault(_Color);
-
 var _Canvas2D = __webpack_require__(0);
 
 var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
@@ -1322,13 +1314,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _sound = __webpack_require__(15);
 
-var _Canvas2D = __webpack_require__(0);
+var _displayLoading = __webpack_require__(24);
 
-var _Canvas2D2 = _interopRequireDefault(_Canvas2D);
-
-var _Color = __webpack_require__(4);
-
-var _Color2 = _interopRequireDefault(_Color);
+var _displayLoading2 = _interopRequireDefault(_displayLoading);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1346,10 +1334,13 @@ var assets = {
       var loadHandler = function loadHandler() {
         _this.loaded += 1;
         if (_this.toLoad === _this.loaded) {
-          _this.toLoad = 0;
-          _this.loaded = 0;
+          /*  this.toLoad = 0;
+            this.loaded = 0; */
           resolve();
         }
+        // percentage of loaded assets
+        var percent = Math.ceil(_this.loaded / _this.toLoad * 100);
+        (0, _displayLoading2.default)(percent);
       };
 
       _this.toLoad = sources.length;
@@ -1940,8 +1931,6 @@ var _Color2 = _interopRequireDefault(_Color);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var aboutGame = function aboutGame(bulletInGun, bulletsIn, live, heart, shitHappens, shitdown, score) {
-  // Canvas2D.drawText('LIVES:', { x: 5, y: 140 }, Color.olive);
-  // /Canvas2D.drawText('Bullets:', { x: 5, y: 200 }, Color.olive);
   for (var i = 0; i < bulletInGun; i++) {
     _Canvas2D2.default.drawImage(bulletsIn, { x: 10 + 15 * i, y: 190 }, 80);
   }
@@ -1960,12 +1949,12 @@ var aboutGame = function aboutGame(bulletInGun, bulletsIn, live, heart, shitHapp
 var diplayGameOver = function diplayGameOver(gameover) {
   _Canvas2D2.default.drawImage(gameover, { x: 160, y: 150 });
   _Canvas2D2.default.drawRect(325, 280, 250, 50);
-  _Canvas2D2.default.drawRect(323, 278, 254, 54, 2, _Color2.default.ghostWhite);
-  _Canvas2D2.default.fillRect(330, 285, 245, 45, 'rgba(76, 63, 191, 0.3)');
+  _Canvas2D2.default.drawRect(323, 278, 254, 54, 2, _Color2.default.white);
+  _Canvas2D2.default.fillRect(325, 280, 250, 50, 'rgba(76, 63, 191, 0.3)');
 };
 var displayScore = function displayScore(score) {
-  _Canvas2D2.default.fillRect(300, 50, 300, 60, '#dc9e44');
-  _Canvas2D2.default.drawText('BEST SCORE:' + score, { x: 320, y: 60 }, '#3a270c', '35px');
+  _Canvas2D2.default.fillRect(300, 50, 300, 60, '#42f4eb');
+  _Canvas2D2.default.drawText('BEST SCORE:' + score, { x: 320, y: 60 }, '#788239', '35px');
 };
 
 exports.aboutGame = aboutGame;
@@ -2103,6 +2092,28 @@ var setScore = function setScore(score) {
 };
 
 exports.setScore = setScore;
+
+/***/ }),
+/* 23 */,
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var displayLoading = function displayLoading(percent) {
+  var percentLoadedWrapper = document.getElementById('loading');
+  var percentLoaded = document.getElementById('percentage');
+  percentLoaded.innerText = percent + '%';
+  if (percent === 100) {
+    percentLoadedWrapper.classList.add('invisible');
+  }
+};
+
+exports.default = displayLoading;
 
 /***/ })
 /******/ ]);
